@@ -53,33 +53,23 @@ def pcf_parser(filename):
 
 
 def pcf_decrypt(hex_str):
-    bin_str = binascii.unhexlify(hex_str)
 
-    ht = bin_str[0:20]
+    bin_str = binascii.unhexlify(hex_str)
+    ht = list(bin_str[0:20])
     enc = bin_str[40:]
     iv = bin_str
 
-    new_ht = ""
-    for i in range(20):
-        if i == 19:
-            new_ht += chr(ord(ht[19]) + 1)
-        else:
-            new_ht += ht[i]
+    ht[19] = chr(ord(ht[19]) + 1)
 
-    new_ht2 = ""
-    for i in range(20):
-        if i == 19:
-            new_ht2 += chr(ord(ht[19]) + 3)
-        else:
-            new_ht2 += ht[i]
+    hash = hashlib.sha1()
+    hash.update(''.join(ht))
+    h2 = hash.digest()
 
-    hash1 = hashlib.sha1()
-    hash1.update(new_ht)
-    h2 = hash1.digest()
+    ht[19] = chr(ord(ht[19]) + 2)
 
-    hash2 = hashlib.sha1()
-    hash2.update(new_ht2)
-    h3 = hash2.digest()
+    hash = hashlib.sha1()
+    hash.update(''.join(ht))
+    h3 = hash.digest()
 
     key = h2 + h3[0:4]
 
