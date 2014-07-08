@@ -29,7 +29,7 @@ PeerTimeout=90
 EnableLocalLAN=0
 ```
 
-More details [here](http://blog.breakinsecurity.com/decrypt-cisco-vpn-client-files-pcf/). -- Decrypt Cisco VPN Client Files (.pcf)
+More details [here](http://blog.breakinsecurity.com/decrypt-cisco-vpn-client-files-pcf/) -- Decrypt Cisco VPN Client Files (.pcf)
 
 ## Requirements
 
@@ -53,8 +53,7 @@ running install_egg_info
 
 ## Install
 
-* Download the zipfile from the [releases](https://github.com/axcheron/cisco_pwdecrypt/releases) page and install it.
-* Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git` and install it yourself.
+Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git` and install it yourself.
 
 ## Getting Started
 
