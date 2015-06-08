@@ -1,7 +1,7 @@
 cisco_pwdecrypt
 ===============
 
-Simple Python tool to decrypt the "enc_GroupPwd" variable in PCF files.
+Simple Python tool to decrypt the "enc_GroupPwd" variable in PCF files (and Type 7 passwords).
 
 ## Description
 
@@ -53,7 +53,7 @@ running install_egg_info
 
 ## Install
 
-Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git` and install it yourself.
+Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git`
 
 ## Getting Started
 
@@ -64,6 +64,7 @@ Usage: cisco_pwdecrypt.py [options]
 Options:
     [-p, --pcfvar] enc_GroupPwd Variable
     [-f, --pcffile] .pcf File
+    [-t, --type7] Type 7 Password
     [-h, --help] Display this menu
 
 $ python cisco_pwdecrypt.py -p 886E2FC74BFCD8B6FAF47784C386A50D0C1A5D0528D1E682B7EBAB6
@@ -71,5 +72,8 @@ B2E91E792E389914767193F9114FA26C1E192034754F85FC97ED36509
 Result: Th!sIsMyK3y#
 
 $ python cisco_pwdecrypt.py -f BreakInSecurity_VPN.pcf
+Result: Th!sIsMyK3y#
+
+$ python cisco_pwdecrypt.py -t 01270E454822152238671D105A
 Result: Th!sIsMyK3y#
 ```
