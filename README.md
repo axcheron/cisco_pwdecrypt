@@ -31,13 +31,13 @@ EnableLocalLAN=0
 
 ## Requirements
 
-This tool require the [pyCrypto](https://www.dlitz.net/software/pycrypto/) module.
+This tool requires the [pyCrypto](https://www.dlitz.net/software/pycrypto/) module.
 
 ```bash
 $ pip install pyCrypto
 ```
 
-> **Note:** pyCrypto could require Microsoft Visual C++ 10.0
+> **Note:** pyCrypto could requires Microsoft Visual C++ 10.0
 
 ## Install
 
