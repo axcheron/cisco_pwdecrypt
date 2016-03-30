@@ -29,27 +29,15 @@ PeerTimeout=90
 EnableLocalLAN=0
 ```
 
-More details [here](http://blog.breakinsecurity.com/decrypt-cisco-vpn-client-files-pcf/) -- Decrypt Cisco VPN Client Files (.pcf)
-
 ## Requirements
 
-This tool require the [pyDes](http://twhiteman.netfirms.com/des.html) module.
+This tool require the [pyCrypto](https://www.dlitz.net/software/pycrypto/) module.
 
 ```bash
-$ tar -xzf pyDes-2.0.1.tar.gz
-
-$ cd pyDes-2.0.1
-
-$ python setup.py install
-running install
-running build
-running build_py
-creating build
-creating build/lib
-copying pyDes.py -> build/lib
-running install_lib
-running install_egg_info
+$ pip install pyCrypto
 ```
+
+> **Note:** pyCrypto could require Microsoft Visual C++ 10.0
 
 ## Install
 
@@ -58,14 +46,17 @@ Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git`
 ## Getting Started
 
 ```bash
-$ python cisco_pwdecrypt.py -h
 Usage: cisco_pwdecrypt.py [options]
 
 Options:
-    [-p, --pcfvar] enc_GroupPwd Variable
-    [-f, --pcffile] .pcf File
-    [-t, --type7] Type 7 Password
-    [-h, --help] Display this menu
+  -h, --help            show this help message and exit
+  -p PCFVAR, --pcfvar=PCFVAR
+                        enc_GroupPwd Variable
+  -f PCFFILE, --pcffile=PCFFILE
+                        .pcf File
+  -t TYPE7, --type7=TYPE7
+                        Type 7 Password
+
 
 $ python cisco_pwdecrypt.py -p 886E2FC74BFCD8B6FAF47784C386A50D0C1A5D0528D1E682B7EBAB6
 B2E91E792E389914767193F9114FA26C1E192034754F85FC97ED36509
@@ -77,3 +68,7 @@ Result: Th!sIsMyK3y#
 $ python cisco_pwdecrypt.py -t 01270E454822152238671D105A
 Result: Th!sIsMyK3y#
 ```
+
+## License
+
+This project is released under the Apache 2 license. See LICENCE file.
