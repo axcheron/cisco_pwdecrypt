@@ -1,7 +1,7 @@
 cisco_pwdecrypt
 ===============
 
-Simple Python tool to decrypt the "enc_GroupPwd" variable in PCF files (and Type 7 passwords).
+Originally developed to to decrypt the "enc_GroupPwd" variable in PCF files. This tool has evolved to decrypt Cisco type 7 and Cisco type 5 passwords (using dictionary attacks).
 
 ## Description
 
@@ -31,10 +31,10 @@ EnableLocalLAN=0
 
 ## Requirements
 
-This tool requires the [pyCrypto](https://www.dlitz.net/software/pycrypto/) module.
+This tool requires the [pyCrypto](https://www.dlitz.net/software/pycrypto/) and [passlib](https://bitbucket.org/ecollins/passlib/wiki/Home) modules.
 
 ```bash
-$ pip install pyCrypto
+$ pip install pyCrypto passlib
 ```
 
 > **Note:** pyCrypto could requires Microsoft Visual C++ 10.0
@@ -58,15 +58,34 @@ Options:
                         Type 7 Password
 
 
-$ python cisco_pwdecrypt.py -p 886E2FC74BFCD8B6FAF47784C386A50D0C1A5D0528D1E682B7EBAB6
+$ python3 cisco_pwdecrypt.py -p 886E2FC74BFCD8B6FAF47784C386A50D0C1A5D0528D1E682B7EBAB6
 B2E91E792E389914767193F9114FA26C1E192034754F85FC97ED36509
-Result: Th!sIsMyK3y#
+[*] Result: Th!sIsMyK3y#
 
-$ python cisco_pwdecrypt.py -f BreakInSecurity_VPN.pcf
-Result: Th!sIsMyK3y#
+$ python3 cisco_pwdecrypt.py -f BreakInSecurity_VPN.pcf
+[*] Result: Th!sIsMyK3y#
 
-$ python cisco_pwdecrypt.py -t 01270E454822152238671D105A
-Result: Th!sIsMyK3y#
+$ python3 cisco_pwdecrypt.py -t 01270E454822152238671D105A
+[*] Result: Th!sIsMyK3y#
+
+$ python3 cisco_pwdecrypt.py -u "$1$VkQd$Vma3sR7B1LL.v5lgy1NYc/" -w passwords.txt
+[*] Bruteforcing 'type 5' hash...
+
+        Found 10000 passwords to test.
+        Testing: $1$VkQd$Vma3sR7B1LL.v5lgy1NYc/
+        Hash Type = MD5
+        Salt = VkQd
+        Hash = Vma3sR7B1LL.v5lgy1NYc/
+
+        [Status] 60/10000 password tested...
+        [Status] 106/10000 password tested...
+        [Status] 112/10000 password tested...
+        [Status] 159/10000 password tested...
+        [Status] 840/10000 password tested...
+        [Status] 919/10000 password tested...
+        [Status] 933/10000 password tested...
+
+[*] Password Found = Password123
 ```
 
 ## License

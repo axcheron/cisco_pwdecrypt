@@ -6,8 +6,10 @@ __author__ = 'axcheron'
 __license__ = 'Apache 2'
 __version__ = '0.1'
 
-from optparse import OptionParser
+import argparse
+import random
 from binascii import unhexlify
+from passlib.hash import md5_crypt
 from Crypto.Cipher import DES3
 from hashlib import sha1
 from re import search
@@ -64,7 +66,7 @@ def pcf_decrypt(hex_str):
         if ord(c) >= 31:
             quickfix += c
 
-    print("Result: %s" % quickfix)
+    print("[*] Result: %s" % quickfix)
 
 
 def type7_decrypt(enc_pwd):
@@ -74,30 +76,104 @@ def type7_decrypt(enc_pwd):
     pwd_hex = [enc_pwd[x:x + 2] for x in range(0, len(enc_pwd), 2)]
     cleartext = [chr(xlat[index+i] ^ int(pwd_hex[i], 16)) for i in range(0, len(pwd_hex))]
 
-    print("Result: %s" % ''.join(cleartext))
+    print("[*] Result: %s" % ''.join(cleartext))
+
+
+def _make_gen(reader):
+
+    b = reader(1024 * 1024)
+    while b:
+        yield b
+        b = reader(1024*1024)
+
+
+def linecounter(filename):
+
+    try:
+        f = open(filename, 'rb')
+    except IOError:
+        print('[ERR] Cannot open:', filename)
+        exit(-1)
+
+    f_gen = _make_gen(f.raw.read)
+    return sum( buf.count(b'\n') for buf in f_gen )
+
+
+def type5_decrypt(enc_pwd, dict):
+
+    print("[*] Bruteforcing 'type 5' hash...\n")
+
+    # Count passwords in the wordlist
+    passnum = linecounter(dict)
+    print("\tFound %d passwords to test." % passnum)
+
+    try:
+        passf = open(dict, 'rb')
+    except IOError:
+        print('[ERR] Cannot open:', dict)
+        exit(-1)
+
+    # Splitting hash
+    split_pwd = enc_pwd.split('$')
+
+    print("\tTesting: %s" % enc_pwd)
+    if split_pwd[1] == '1':
+        print("\tHash Type = MD5")
+    else:
+        print("\t[ERR] Your 'type 5' hash is not valid.")
+        exit(-1)
+
+    print("\tSalt = %s" % split_pwd[2])
+    print("\tHash = %s\n" % split_pwd[3])
+
+    count = 0
+    for line in passf.readlines():
+        # random status
+        if random.randint(1, 100) == 42:
+            print("\t[Status] %d/%d password tested..." % (count, passnum))
+        if md5_crypt.encrypt(line.rstrip(), salt=split_pwd[2]) == enc_pwd:
+            print("\n[*] Password Found = %s" % line.decode("utf-8") )
+            exit(0)
+        count += 1
+    print("\t[-] Password Not Found. You should try another dictionary.")
 
 
 if __name__ == "__main__":
-    parser = OptionParser()
+    '''This function parses and return arguments passed in'''
+    # Assign description to the help doc
+    parser = argparse.ArgumentParser(
+        description="Simple tool to decrypt Cisco passwords")
 
-    parser.add_option("-p", "--pcfvar", dest="pcfvar", action="store",
-                      help="enc_GroupPwd Variable", type="string")
+    # Add arguments
+    parser.add_argument("-p", "--pcfvar", dest="pcfvar", action="store",
+                        help="enc_GroupPwd Variable", type=str)
 
-    parser.add_option("-f", "--pcffile", dest="pcffile", action="store",
-                      help=".pcf File", type="string")
+    parser.add_argument("-f", "--pcffile", dest="pcffile", action="store",
+                        help=".pcf File", type=str)
 
-    parser.add_option("-t", "--type7", dest="type7", action="store",
-                      help="Type 7 Password", type="string")
+    parser.add_argument("-t", "--type7", dest="type7", action="store",
+                        help="Type 7 Password", type=str)
 
-    (options, args) = parser.parse_args()
+    parser.add_argument("-u", "--type5", dest="type5", action="store",
+                        help="Type 5 Password", type=str)
 
-    if options.pcfvar:
-        pcf_decrypt(options.pcfvar)
-    elif options.pcffile:
-        pcf_parser(options.pcffile)
-    elif options.type7:
-        type7_decrypt(options.type7)
+    parser.add_argument("-d", "--dict", dest="dict", action="store",
+                        help="Password list", type=str)
 
+    args = parser.parse_args()
+
+    if args.pcfvar:
+        pcf_decrypt(args.pcfvar)
+    elif args.pcffile:
+        pcf_parser(args.pcffile)
+    elif args.type7:
+        type7_decrypt(args.type7)
+    elif args.type5 and args.dict:
+        type5_decrypt(args.type5, args.dict)
+    elif args.type5 and args.dict is None:
+        print("Type 5 requires -d or --dict.")
+        exit(-1)
     else:
         parser.print_help()
         exit(-1)
+
