@@ -1,7 +1,7 @@
 cisco_pwdecrypt
 ===============
 
-Originally developed to decrypt the "enc_GroupPwd" variable in PCF files. This tool has evolved to decrypt Cisco type 7 and Cisco type 5 passwords (using dictionary attacks).
+Originally developed to decrypt the *"enc_GroupPwd"* variable in PCF files. This tool has evolved and can also decode Cisco *type 7* and bruteforce Cisco *type 5* passwords (using dictionary attacks).
 
 ## Description
 
@@ -35,6 +35,10 @@ This tool requires the [pyCrypto](https://www.dlitz.net/software/pycrypto/) and 
 
 ```bash
 $ pip install pyCrypto passlib
+```
+**OR**
+```bash
+$ pip install -r requirements.txt
 ```
 
 > **Note:** pyCrypto could requires Microsoft Visual C++ 10.0
@@ -92,6 +96,13 @@ $ python3 cisco_pwdecrypt.py -u "$1$VkQd$Vma3sR7B1LL.v5lgy1NYc/" -w passwords.tx
 
 [*] Password Found = Password123
 ```
+
+## Resources
+
+Here are some interesting resources for this project :
+
+- https://github.com/berzerk0/Probable-Wordlists (some wordlists)
+- [Cisco Routers Password Types](https://learningnetwork.cisco.com/docs/DOC-27166)
 
 ## License
 
