@@ -41,7 +41,7 @@ $ pip install pyCrypto passlib
 $ pip install -r requirements.txt
 ```
 
-> **Note:** pyCrypto could requires Microsoft Visual C++ 10.0
+> **Note:** If you are using Microsoft Windows, pyCrypto could requires Microsoft Visual C++ 10.0
 
 ## Install
 
