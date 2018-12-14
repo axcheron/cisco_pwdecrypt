@@ -71,16 +71,16 @@ $ python3 cisco_pwdecrypt.py -f BreakInSecurity_VPN.pcf
 [*] Result: Th!sIsMyK3y#
 ```
 
-### Type 7
+### Cisco Type 7
 
 ```bash
 $ python3 cisco_pwdecrypt.py -t 01270E454822152238671D105A
 [*] Result: Th!sIsMyK3y#
 ```
 
-### Type 5
+### Cisco Type 5
 
-**Note**: When bruteforcing Cisco *Type5* passwords, you have to escape the '$' sign in the password with a backslash. It's not a Python issue, this is because most shells consider strings starting with '$' as a variable.
+**Note**: When bruteforcing Cisco *Type5* passwords, you have to escape the **'$'** sign in the password with a backslash. It's not a Python issue, this is because most shells consider strings starting with **'$'** as a variable.
 
 ```bash
 $ python3 cisco_pwdecrypt.py -u "\$1\$VkQd\$Vma3sR7B1LL.v5lgy1NYc/" -w passwords.txt
