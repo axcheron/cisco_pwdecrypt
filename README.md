@@ -1,7 +1,7 @@
 cisco_pwdecrypt
 ===============
 
-Originally developed to decrypt the *"enc_GroupPwd"* variable in PCF files. This tool has evolved and can also decode Cisco *type 7* and bruteforce Cisco *type 5* passwords (using dictionary attacks).
+Originally developed to decrypt the *"enc_GroupPwd"* variable in PCF files. This tool has evolved and can also decode Cisco *type 7* passwords and bruteforce Cisco *type 5* passwords (using dictionary attacks).
 
 ## Description
 
