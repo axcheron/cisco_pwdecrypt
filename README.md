@@ -41,11 +41,7 @@ $ pip install pyCrypto passlib
 $ pip install -r requirements.txt
 ```
 
-> **Note:** If you are using Microsoft Windows, pyCrypto could requires Microsoft Visual C++ 10.0
-
-## Install
-
-Checkout the source: `git clone git://github.com/axcheron/cisco_pwdecrypt.git`
+> **Note:** If you are using Microsoft Windows, **pyCrypto** could requires Microsoft Visual C++ 10.0.
 
 ## Getting Started
 
