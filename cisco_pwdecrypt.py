@@ -14,6 +14,7 @@ from Crypto.Cipher import DES3
 from hashlib import sha1
 from re import search
 from sys import exit
+import sys
 
 
 xlat = [0x64, 0x73, 0x66, 0x64, 0x3b, 0x6b, 0x66, 0x6f, 0x41, 0x2c, 0x2e, 0x69, 0x79,
@@ -131,7 +132,7 @@ def type5_decrypt(enc_pwd, dict):
         # random status
         if random.randint(1, 100) == 42:
             print("\t[Status] %d/%d password tested..." % (count, passnum))
-        if md5_crypt.encrypt(line.rstrip(), salt=split_pwd[2]) == enc_pwd:
+        if md5_crypt.hash(line.rstrip(), salt=split_pwd[2]) == enc_pwd:
             print("\n[*] Password Found = %s" % line.decode("utf-8") )
             exit(0)
         count += 1
